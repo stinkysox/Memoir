@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css2?family=Whisper&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sacramento&family=Whisper&display=swap");
+.login-main-container {
+  background-color: #795757;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.logo-image {
+  height: 180px;
+  width: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-bottom: 0px;
+}
+
+.app-name {
+  font-family: "Whisper", cursive;
+  font-weight: 400;
+  font-weight: bold;
+  margin-top: 0px;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 320px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  padding-bottom: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.label {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  font-family: "Sacramento", cursive;
+}
+
+.input-field {
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.input-field:focus {
+  border-color: #795757;
+  outline: none;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px 0;
+  background-color: #795757;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-form-link {
+  color: #3498db;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+.toggle-form-link:hover {
+  color: #2980b9;
+}
+
+.submit-button:hover {
+  background-color: #5d4545;
+}
+
+.login-bottom-container {
+  margin-top: 15px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+@media (min-width: 768px) {
+  .form-container {
+    max-width: 400px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .form-container {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 600px) {
+  .login-main-container {
+    justify-content: flex-start;
+  }
+
+  .form-container {
+    margin-top: 30%;
+  }
+}
