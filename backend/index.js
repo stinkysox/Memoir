@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import cors from "cors";
 import { createUser } from "./controllers/userControllers.js"; // Correct import syntax
 import dotenv from "dotenv";
 dotenv.config();
@@ -7,6 +8,7 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.listen(4000, () => {
   console.log("Server is running on port 4000");
@@ -26,3 +28,7 @@ const connectDB = async () => {
 connectDB();
 
 app.post("/createuser", createUser);
+app.get("/", (req, res) => {
+  console.log("Welcome Browser");
+  res.send("Welcome Browser"); // Sending a response to the client
+});
