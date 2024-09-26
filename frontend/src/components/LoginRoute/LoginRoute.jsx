@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./LoginRoute.css";
 import { motion } from "framer-motion";
+
 const LoginRoute = () => {
   const [isLoginClicked, setIsLoginClicked] = useState(true);
 
@@ -37,6 +38,7 @@ const LoginRoute = () => {
                 type="text"
                 id="email"
                 placeholder="Enter your Email"
+                required
               />
             </div>
             <div>
@@ -49,6 +51,7 @@ const LoginRoute = () => {
                 type="password"
                 id="password"
                 placeholder="Enter your Password"
+                required
               />
             </div>
 
@@ -57,7 +60,7 @@ const LoginRoute = () => {
             </button>
 
             <div className="login-bottom-container">
-              <p>Dont have an account?</p>
+              <p>Don't have an account?</p>
               <span
                 className="toggle-form-link"
                 onClick={() => setIsLoginClicked(false)}
@@ -78,6 +81,7 @@ const LoginRoute = () => {
                 type="text"
                 id="name"
                 placeholder="Enter your Name"
+                required
               />
             </div>
 
@@ -91,6 +95,7 @@ const LoginRoute = () => {
                 type="text"
                 id="email"
                 placeholder="Enter your Email"
+                required
               />
             </div>
 
@@ -104,6 +109,7 @@ const LoginRoute = () => {
                 type="password"
                 id="password"
                 placeholder="Create Password"
+                required
               />
             </div>
 
