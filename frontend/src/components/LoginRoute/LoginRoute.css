@@ -41,7 +41,6 @@
 }
 
 .label {
-  font-family: "Poppins", sans-serif;
   font-size: 20px;
   font-weight: bold;
   color: #333;
@@ -100,6 +99,13 @@
   font-size: 14px;
 }
 
+.error-message {
+  color: tomato;
+  font-family: "Courier New", Courier, monospace;
+  margin: 10px 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
 @media (min-width: 768px) {
   .form-container {
     max-width: 400px;

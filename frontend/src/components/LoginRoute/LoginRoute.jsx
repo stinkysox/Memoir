@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./LoginRoute.css";
 import { motion } from "framer-motion";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import Cookies from "js-cookie";
+import { AuthContext } from "../../AuthContext/AuthContext";
 
 const LoginRoute = () => {
+  const { auth, login } = useContext(AuthContext);
   const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [apiStatus, setApiStatus] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -16,6 +19,10 @@ const LoginRoute = () => {
     email: "",
     password: "",
   });
+
+  if (auth.isAuthenticated) {
+    return <Navigate to="/" />;
+  }
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;
@@ -28,6 +35,7 @@ const LoginRoute = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setApiStatus("Loading");
+    setErrorMessage("");
     console.log(formData);
     const url = isLoginClicked
       ? "http://localhost:4000/login"
@@ -35,16 +43,18 @@ const LoginRoute = () => {
 
     try {
       const response = await axios.post(url, formData);
-      console.log(response.data);
       const { token } = response.data;
 
       if (token) {
         Cookies.set("token", token);
         setApiStatus("Success");
+        login(token);
         navigate("/");
       }
     } catch (error) {
       setApiStatus("Failure");
+      const message = error.response?.data?.message || "An error occurred.";
+      setErrorMessage(message);
       console.error("Error submitting the form:", error);
     }
   };
@@ -52,6 +62,7 @@ const LoginRoute = () => {
   const toggleForm = () => {
     setIsLoginClicked((prev) => !prev);
     setFormData({ name: "", email: "", password: "" });
+    setErrorMessage("");
   };
 
   const renderLoadingView = () => (
@@ -85,14 +96,14 @@ const LoginRoute = () => {
         {!isLoginClicked && (
           <div>
             <label className="label" htmlFor="name">
-              Name
+              Username
             </label>
             <br />
             <input
               className="input-field"
               type="text"
               id="name"
-              placeholder="Enter your Name"
+              placeholder="Enter your Username"
               value={formData.name}
               onChange={handleInputChange}
               required
@@ -136,6 +147,9 @@ const LoginRoute = () => {
         <button type="submit" className="submit-button">
           {isLoginClicked ? "Login" : "Sign Up"}
         </button>
+        {apiStatus === "Failure" && (
+          <p className="error-message">{errorMessage}</p>
+        )}
 
         <div className="login-bottom-container">
           <p>
@@ -157,8 +171,6 @@ const LoginRoute = () => {
         return renderLoadingView();
       case "Success":
         return <div>Success! Redirecting...</div>;
-      case "Failure":
-        return <div>Error submitting the form. Please try again.</div>;
       default:
         return renderFormView();
     }

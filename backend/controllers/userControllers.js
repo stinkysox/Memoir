@@ -1,5 +1,5 @@
-import User from "../models/userModel.js"; // Adjust the path as necessary
-import bcrypt from "bcryptjs"; // Import bcrypt for password hashing
+import User from "../models/userModel.js";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import validator from "validator";
 
@@ -14,12 +14,20 @@ export const createUser = async (req, res) => {
   const { name, email, password, images } = req.body;
 
   try {
-    // Check if the user already exists
-    const exists = await User.findOne({ email });
-    if (exists) {
+    const [emailExists, userNameExists] = await Promise.all([
+      User.findOne({ email }),
+      User.findOne({ name }),
+    ]);
+    if (emailExists) {
       return res
         .status(400)
-        .json({ success: false, message: "User already exists" });
+        .json({ success: false, message: "Email already exists" });
+    }
+
+    if (userNameExists) {
+      return res
+        .status(400)
+        .json({ success: false, message: `Username ${name} is already taken` });
     }
 
     // Validate email format and strong password
@@ -30,9 +38,10 @@ export const createUser = async (req, res) => {
     }
 
     if (password.length < 8) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Please enter a strong password" });
+      return res.status(400).json({
+        success: false,
+        message: "The password must be atleast 8 characters long",
+      });
     }
 
     // Hash password
@@ -52,17 +61,56 @@ export const createUser = async (req, res) => {
     // Create token
     const token = createToken(user._id);
 
-    // Send success response with token
     return res.status(201).json({ success: true, token });
   } catch (error) {
-    // Log the error to the console for debugging
     console.error("Error in createUser:", error.message);
 
-    // Send a more detailed error response
     return res.status(500).json({
       success: false,
       message: "Server error occurred",
-      error: error.message, // Include this for easier debugging
+      error: error.message,
+    });
+  }
+};
+
+export const verifyUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    if (!validator.isEmail(email)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid email format" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid email or password" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid email or password" });
+    }
+
+    const token = createToken(user._id);
+
+    return res.status(200).json({
+      success: true,
+      message: "Login successful",
+      token,
+    });
+  } catch (error) {
+    console.error("Error in verifyUser:", error.message);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error occurred",
+      error: error.message,
     });
   }
 };
