@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Whisper&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Sacramento&family=Whisper&display=swap");
+
 .login-main-container {
   background-color: #795757;
   min-height: 100vh;
@@ -8,23 +9,23 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
+  padding-bottom: 50px;
 }
 
-.logo-image {
+.login-logo-image {
   height: 180px;
   width: auto;
   border-radius: 10px;
   margin-bottom: 20px;
 }
 
-.app-name {
+.login-app-name {
   font-family: "Whisper", cursive;
-  font-weight: 400;
   font-weight: bold;
   margin-top: 0px;
 }
 
-.form-container {
+.login-form-container {
   width: 100%;
   max-width: 320px;
   background-color: white;
@@ -34,24 +35,26 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.image-container {
+.login-image-container {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.label {
+.login-label {
   font-size: 20px;
   font-weight: bold;
   color: #333;
   font-family: "Sacramento", cursive;
+  margin-bottom: 0px;
 }
 
-.input-field {
+.login-input-field {
   width: 100%;
   margin-top: 4px;
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid black !important;
+  color: black !important;
   border-radius: 5px;
   font-size: 14px;
   box-sizing: border-box;
@@ -59,12 +62,12 @@
   font-family: "Courier New", Courier, monospace;
 }
 
-.input-field:focus {
+.login-input-field:focus {
   border-color: #795757;
   outline: none;
 }
 
-.submit-button {
+.login-submit-button {
   width: 100%;
   padding: 10px 0;
   background-color: #795757;
@@ -72,61 +75,62 @@
   border: none;
   border-radius: 5px;
   font-size: 16px;
-  font-family: "Poppins", sans-serif;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-family: "Courier New", Courier, monospace;
 }
 
-.toggle-form-link {
+.login-toggle-form-link {
   color: #3498db;
   cursor: pointer;
   font-weight: 600;
   margin-left: 5px;
+  font-size: 16px;
 }
 
-.toggle-form-link:hover {
+.login-toggle-form-link:hover {
   color: #2980b9;
 }
 
-.submit-button:hover {
+.login-submit-button:hover {
   background-color: #5d4545;
 }
 
 .login-bottom-container {
   margin-top: 15px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
+  font-size: 16px;
+  text-align: center;
+  font-weight: bold;
+  color: #384b70;
 }
 
-.error-message {
+.login-error-message {
   color: tomato;
   font-family: "Courier New", Courier, monospace;
   margin: 10px 10px;
   font-size: 14px;
   font-weight: bold;
 }
+
 @media (min-width: 768px) {
-  .form-container {
+  .login-form-container {
     max-width: 400px;
   }
 }
 
 @media (min-width: 1024px) {
-  .form-container {
+  .login-form-container {
     max-width: 500px;
   }
 }
 
-@media (min-width: 768px) {
-  .logo-image {
-  }
-}
 @media (max-width: 600px) {
   .login-main-container {
     justify-content: flex-start;
   }
 
-  .form-container {
-    margin-top: 30%;
+  .login-form-container {
+    margin-top: 8%;
   }
 }

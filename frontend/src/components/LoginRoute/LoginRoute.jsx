@@ -1,10 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import "./LoginRoute.css";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import { AuthContext } from "../../AuthContext/AuthContext";
+import Navbar from "../Navbar/Navbar";
 
 const LoginRoute = () => {
   const { auth, login } = useContext(AuthContext);
@@ -46,11 +47,7 @@ const LoginRoute = () => {
 
       if (token) {
         setApiStatus("Success");
-
         login(token, userId, name, images);
-
-        setApiStatus("Success");
-
         navigate("/");
       }
     } catch (error) {
@@ -74,21 +71,21 @@ const LoginRoute = () => {
   );
 
   const renderFormView = () => (
-    <form className="form-container" onSubmit={handleSubmit}>
-      <div className="image-container">
+    <form className="login-form-container" onSubmit={handleSubmit}>
+      <div className="login-image-container">
         <motion.img
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           src="https://i.pinimg.com/564x/34/5f/5e/345f5ea88e6799a06422403518702135.jpg"
-          className="logo-image"
+          className="login-logo-image"
           alt="Memoir Logo"
         />
         <motion.h1
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1, ease: "easeOut" }}
-          className="app-name"
+          className="login-app-name"
         >
           Memoir
         </motion.h1>
@@ -97,14 +94,14 @@ const LoginRoute = () => {
       <div className={isLoginClicked ? "login-container" : "sign-up-container"}>
         {!isLoginClicked && (
           <div>
-            <label className="label" htmlFor="name">
+            <label className="login-label" htmlFor="input-name">
               Username
             </label>
             <br />
             <input
-              className="input-field"
+              className="login-input-field"
               type="text"
-              id="name"
+              id="input-name"
               placeholder="Enter your Username"
               value={formData.name}
               onChange={handleInputChange}
@@ -113,12 +110,12 @@ const LoginRoute = () => {
           </div>
         )}
         <div>
-          <label className="label" htmlFor="email">
+          <label className="login-label" htmlFor="email">
             Email
           </label>
           <br />
           <input
-            className="input-field"
+            className="login-input-field"
             type="text"
             id="email"
             placeholder="Enter your Email"
@@ -129,12 +126,12 @@ const LoginRoute = () => {
         </div>
 
         <div>
-          <label className="label" htmlFor="password">
+          <label className="login-label" htmlFor="password">
             Password
           </label>
           <br />
           <input
-            className="input-field"
+            className="login-input-field"
             type="password"
             id="password"
             placeholder={
@@ -146,11 +143,11 @@ const LoginRoute = () => {
           />
         </div>
 
-        <button type="submit" className="submit-button">
+        <button type="submit" className="login-submit-button">
           {isLoginClicked ? "Login" : "Sign Up"}
         </button>
         {apiStatus === "Failure" && (
-          <p className="error-message">{errorMessage}</p>
+          <p className="login-error-message">{errorMessage}</p>
         )}
 
         <div className="login-bottom-container">
@@ -159,7 +156,7 @@ const LoginRoute = () => {
               ? "Don't have an account?"
               : "Already have an account?"}
           </p>
-          <span className="toggle-form-link" onClick={toggleForm}>
+          <span className="login-toggle-form-link" onClick={toggleForm}>
             {isLoginClicked ? "Create User" : "Login"}
           </span>
         </div>
