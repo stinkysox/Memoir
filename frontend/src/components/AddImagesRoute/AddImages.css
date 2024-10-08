@@ -1,0 +1,156 @@
+.add-image-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #664343;
+  padding: 20px;
+  color: #ffffff;
+  padding-bottom: 50px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.form-container {
+  background-color: #3b3030;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  margin-top: 0px;
+  margin-top: 4%;
+  max-width: 90%;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+input[type="text"],
+input[type="url"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="url"]:focus,
+textarea:focus {
+  background-color: rgba(255, 255, 255, 0.3);
+  outline: none;
+}
+
+textarea {
+  height: 80px;
+  resize: none;
+}
+
+.add-image-image {
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+}
+
+.submit-button {
+  background-color: #fff0d1;
+  color: black;
+  font-family: "Courier New", Courier, monospace;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  width: 100%;
+}
+
+.submit-button:hover {
+  background-color: #fff0d1;
+  transform: scale(1.02);
+}
+
+.error-message {
+  color: #ff6f61;
+  margin-top: 15px;
+}
+
+p {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.postimages-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #1e3e62;
+  color: #ffffff;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.postimages-button:hover {
+  background-color: #2c5a8e;
+  transform: scale(1.05);
+}
+
+.note {
+  margin-top: 20px;
+  font-size: 1rem;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+  h2 {
+    font-size: 1.8rem; /* Further reduced font size */
+  }
+
+  .form-container {
+    padding: 15px; /* Less padding for mobile */
+  }
+
+  .form-group {
+    margin-bottom: 10px; /* Smaller margin for mobile */
+  }
+
+  label {
+    font-size: 0.9rem; /* Smaller font size for mobile */
+  }
+
+  input[type="text"],
+  input[type="url"],
+  textarea {
+    font-size: 0.9rem; /* Smaller font size for input fields */
+  }
+
+  .submit-button {
+    font-size: 1rem; /* Adjust button font size */
+    padding: 10px; /* Maintain button size */
+  }
+
+  .error-message {
+    font-size: 0.9rem;
+  }
+}

@@ -1,19 +1,25 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import { createUser, verifyUser } from "./controllers/userControllers.js"; // Correct import syntax
+
+import {
+  addImages,
+  createUser,
+  deletePost,
+  getUserDetails,
+  verifyUser,
+} from "./controllers/userControllers.js";
 import dotenv from "dotenv";
+
 dotenv.config();
 
 const app = express();
 
-app.use(express.json());
+// Middleware
 app.use(cors());
+app.use(express.json());
 
-app.listen(4000, () => {
-  console.log("Server is running on port 4000");
-});
-
+// Database connection
 const connectDB = async () => {
   try {
     await mongoose.connect(
@@ -25,11 +31,23 @@ const connectDB = async () => {
   }
 };
 
+// Connect to the database
 connectDB();
 
+// Routes
 app.post("/createuser", createUser);
 app.post("/login", verifyUser);
+app.put("/add/image", addImages);
+app.post("/user/data", getUserDetails);
+app.delete("/delete/image/:userId/:imageId", deletePost);
+
+// Welcome route
 app.get("/", (req, res) => {
   console.log("Welcome Browser");
-  res.send("Welcome Browser"); // Sending a response to the client
+  res.send("Welcome Browser");
+});
+
+// Start the server
+app.listen(4000, () => {
+  console.log("Server is running on port 4000");
 });

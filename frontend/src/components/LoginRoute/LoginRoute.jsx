@@ -1,15 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./LoginRoute.css";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-import Cookies from "js-cookie";
 import { AuthContext } from "../../AuthContext/AuthContext";
 
 const LoginRoute = () => {
   const { auth, login } = useContext(AuthContext);
-  const [isLoginClicked, setIsLoginClicked] = useState(false);
+  const [isLoginClicked, setIsLoginClicked] = useState(true);
   const [apiStatus, setApiStatus] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
@@ -36,19 +35,22 @@ const LoginRoute = () => {
     event.preventDefault();
     setApiStatus("Loading");
     setErrorMessage("");
-    console.log(formData);
     const url = isLoginClicked
       ? "http://localhost:4000/login"
       : "http://localhost:4000/createuser";
 
     try {
       const response = await axios.post(url, formData);
-      const { token } = response.data;
+      const { name, images, token, userId } = response.data;
+      console.log(response.data);
 
       if (token) {
-        Cookies.set("token", token);
         setApiStatus("Success");
-        login(token);
+
+        login(token, userId, name, images);
+
+        setApiStatus("Success");
+
         navigate("/");
       }
     } catch (error) {

@@ -53,7 +53,7 @@ export const createUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      images,
+      images: images || [],
     });
 
     const user = await newUser.save();
@@ -61,7 +61,9 @@ export const createUser = async (req, res) => {
     // Create token
     const token = createToken(user._id);
 
-    return res.status(201).json({ success: true, token });
+    return res
+      .status(201)
+      .json({ success: true, token, images, name, userId: user._id });
   } catch (error) {
     console.error("Error in createUser:", error.message);
 
@@ -98,11 +100,12 @@ export const verifyUser = async (req, res) => {
     }
 
     const token = createToken(user._id);
-
     return res.status(200).json({
       success: true,
-      message: "Login successful",
       token,
+      images: user.images,
+      name: user.name,
+      userId: user._id,
     });
   } catch (error) {
     console.error("Error in verifyUser:", error.message);
@@ -112,5 +115,85 @@ export const verifyUser = async (req, res) => {
       message: "Server error occurred",
       error: error.message,
     });
+  }
+};
+
+export const addImages = async (req, res) => {
+  const { title, description, image: imageUrl, userId } = req.body;
+  console.log(title);
+
+  try {
+    // Find the user and update their images array
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $push: { images: { title, description, imageUrl } }, // Store image details
+      },
+      { new: true, useFindAndModify: false } // This option returns the updated document
+    );
+
+    if (!updatedUser) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    return res.status(200).json({ success: true, images: updatedUser.images });
+  } catch (error) {
+    console.error("Error in addImages:", error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Server error occurred",
+      error: error.message,
+    });
+  }
+};
+
+export const getUserDetails = async (req, res) => {
+  const { userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ message: "User ID is required." });
+  }
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res.status(200).json({
+      id: user._id,
+      name: user.name,
+      images: user.images,
+    });
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    res.status(500).json({ message: "Server error." });
+  }
+};
+
+export const deletePost = async (req, res) => {
+  const { userId, imageId } = req.params;
+  console.log(`user ${userId} image ${imageId}`);
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { images: { _id: imageId } } },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Image deleted successfully", updatedUser });
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
