@@ -103,7 +103,7 @@ p {
   color: #ffffff;
   border-radius: 5px;
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 15px;
   text-align: center;
   transition: background-color 0.3s, transform 0.2s;
 }
@@ -113,6 +113,10 @@ p {
   transform: scale(1.05);
 }
 
+.add-image {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
 .note {
   margin-top: 20px;
   font-size: 1rem;

@@ -63,7 +63,7 @@ const AddImages = () => {
           alt=""
           className="add-image-image"
         />
-        <p>Add Image</p>
+        <p className="add-image">Add Image</p>
         <form className="form-container" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title:</label>
@@ -131,7 +131,7 @@ const AddImages = () => {
           rel="noopener noreferrer"
           className="postimages-button"
         >
-          Convert your image into a URL.
+          Convert your image into a URL
         </a>
 
         <p className="note">

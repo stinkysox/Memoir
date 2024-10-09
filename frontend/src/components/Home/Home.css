@@ -135,7 +135,7 @@
   border-radius: 2px;
   font-weight: 600;
   overflow-y: auto;
-  height: 60px;
+  max-height: 70px;
   text-align: left;
   margin-top: 0px;
   padding: 10px;
@@ -182,6 +182,10 @@
 
 .image-card button:hover {
   background-color: rgb(255, 138, 117);
+}
+
+.home-second-container p {
+  font-style: italic;
 }
 
 @media (max-width: 600px) {

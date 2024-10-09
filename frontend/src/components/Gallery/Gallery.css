@@ -44,6 +44,8 @@
 .posted-by {
   margin-top: 8px;
   font-style: italic;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .gallery-description {
