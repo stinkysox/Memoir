@@ -61,7 +61,7 @@ const Home = () => {
             </p>
           ) : (
             <div className="images-display">
-              <p>Showing images from your collection:</p>
+              <p className="para-two">Showing images from your collection:</p>
               <div className="image-gallery">
                 {userImages.map((image, index) => (
                   <div key={index} className="image-card">

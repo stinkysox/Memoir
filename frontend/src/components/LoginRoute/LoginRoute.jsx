@@ -94,14 +94,14 @@ const LoginRoute = () => {
       <div className={isLoginClicked ? "login-container" : "sign-up-container"}>
         {!isLoginClicked && (
           <div>
-            <label className="login-label" htmlFor="input-name">
+            <label className="login-label" htmlFor="name">
               Username
             </label>
             <br />
             <input
               className="login-input-field"
               type="text"
-              id="input-name"
+              id="name"
               placeholder="Enter your Username"
               value={formData.name}
               onChange={handleInputChange}
@@ -151,7 +151,7 @@ const LoginRoute = () => {
         )}
 
         <div className="login-bottom-container">
-          <p>
+          <p className="dont-have">
             {isLoginClicked
               ? "Don't have an account?"
               : "Already have an account?"}

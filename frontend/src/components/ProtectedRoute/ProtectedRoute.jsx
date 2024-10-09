@@ -1,16 +1,14 @@
-import React, { Children } from "react";
-import { useContext } from "react";
-import { AuthContext } from "../../AuthContext/AuthContext";
+/* eslint-disable react/prop-types */
+import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
-// eslint-disable-next-line react/prop-types
 const ProtectedRoute = ({ children }) => {
-  const { auth } = useContext(AuthContext);
+  const token = Cookies.get("token");
 
-  if (!auth.isAuthenticated) {
+  if (!token) {
     return <Navigate to="/login" />;
   }
-
   return children;
 };
 

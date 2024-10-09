@@ -123,13 +123,16 @@ export const addImages = async (req, res) => {
   console.log(title);
 
   try {
-    // Find the user and update their images array
+    const dateUploaded = new Date();
+
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       {
-        $push: { images: { title, description, imageUrl } }, // Store image details
+        $push: {
+          images: { title, description, imageUrl, dateUploaded },
+        },
       },
-      { new: true, useFindAndModify: false } // This option returns the updated document
+      { new: true, useFindAndModify: false }
     );
 
     if (!updatedUser) {
@@ -195,5 +198,32 @@ export const deletePost = async (req, res) => {
   } catch (error) {
     console.error("Error deleting image:", error);
     res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+export const fetchAllImages = async (req, res) => {
+  try {
+    const users = await User.find({}, "name images").lean();
+
+    const allImages = users.reduce((acc, user) => {
+      const userImages = user.images.map((image) => ({
+        username: user.name,
+        title: image.title,
+        description: image.description,
+        imageUrl: image.imageUrl,
+        dateUploaded: image.dateUploaded,
+        _id: image._id,
+      }));
+      return acc.concat(userImages);
+    }, []);
+
+    res.status(200).json({ success: true, images: allImages });
+  } catch (error) {
+    console.error("Error fetching images:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server error while fetching images",
+    });
   }
 };

@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { createContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate(); // Initialize the navigate function
   const [auth, setAuth] = useState({
     token: null,
     isAuthenticated: false,
@@ -21,33 +23,31 @@ export const AuthProvider = ({ children }) => {
     const name = Cookies.get("name");
     const images = Cookies.get("images");
 
-    console.log("Token:", token);
-    console.log("UserId:", userId);
-    console.log("Name:", name);
-    console.log("Images:", images);
-
-    if (token && userId && name) {
+    // Check if token exists to set authentication state
+    if (token) {
       setAuth({
         token,
         isAuthenticated: true,
         userId,
       });
 
-      let parsedImages = [];
-      if (images) {
-        try {
-          parsedImages = JSON.parse(images);
-        } catch (error) {
-          console.error("Error parsing images from cookies:", error);
-        }
-      } else {
-        console.warn("Images cookie is not set or is undefined.");
+      try {
+        const parsedImages = images ? JSON.parse(images) : [];
+        setUserDetails({
+          name: name || "",
+          images: Array.isArray(parsedImages) ? parsedImages : [],
+        });
+      } catch (error) {
+        console.error("Error parsing images from cookies:", error);
       }
-
-      setUserDetails({
-        name,
-        images: Array.isArray(parsedImages) ? parsedImages : [], // Ensure images is an array
+    } else {
+      // If no token, ensure the auth state is reset
+      setAuth({
+        token: null,
+        isAuthenticated: false,
+        userId: null,
       });
+      setUserDetails({ name: "", images: [] });
     }
   }, []);
 
@@ -58,30 +58,27 @@ export const AuthProvider = ({ children }) => {
     Cookies.set("name", name, { expires });
     Cookies.set("images", JSON.stringify(Array.isArray(images) ? images : []), {
       expires,
-    }); // Ensure images is a valid array
-
-    setAuth({
-      token,
-      isAuthenticated: true,
-      userId,
     });
+
+    setAuth({ token, isAuthenticated: true, userId });
     setUserDetails({
       name,
-      images: Array.isArray(images) ? images : [], // Ensure images is an array
+      images: Array.isArray(images) ? images : [],
     });
   };
 
   const logout = () => {
     Cookies.remove("token");
-    Cookies.remove("userId"); // Remove userId from cookies
+    Cookies.remove("userId");
     Cookies.remove("name");
     Cookies.remove("images");
-    setAuth({
-      token: null,
-      isAuthenticated: false,
-      userId: null, // Reset userId
-    });
+
+    setAuth({ token: null, isAuthenticated: false, userId: null });
     setUserDetails({ name: "", images: [] });
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 0);
   };
 
   return (

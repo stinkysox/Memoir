@@ -6,6 +6,7 @@ import {
   addImages,
   createUser,
   deletePost,
+  fetchAllImages,
   getUserDetails,
   verifyUser,
 } from "./controllers/userControllers.js";
@@ -31,7 +32,6 @@ const connectDB = async () => {
   }
 };
 
-// Connect to the database
 connectDB();
 
 // Routes
@@ -40,6 +40,7 @@ app.post("/login", verifyUser);
 app.put("/add/image", addImages);
 app.post("/user/data", getUserDetails);
 app.delete("/delete/image/:userId/:imageId", deletePost);
+app.get("/all/images", fetchAllImages);
 
 // Welcome route
 app.get("/", (req, res) => {
