@@ -12,13 +12,17 @@ const Home = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [userImages, setUserImages] = useState([]);
+  const [showModal, setShowModal] = useState(false); // State to handle modal visibility
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.post("http://localhost:4000/user/data", {
-          userId,
-        });
+        const response = await axios.post(
+          "https://memoirapi.onrender.com/user/data",
+          {
+            userId,
+          }
+        );
         console.log(response.data);
         const { name, images } = response.data;
 
@@ -36,11 +40,17 @@ const Home = () => {
     console.log(id);
     console.log(userId);
     try {
-      await axios.delete(`http://localhost:4000/delete/image/${userId}/${id}`);
+      await axios.delete(
+        `https://memoirapi.onrender.com/delete/image/${userId}/${id}`
+      );
       setUserImages(userImages.filter((image) => image._id !== id));
     } catch (error) {
       console.error("Error deleting the image:", error);
     }
+  };
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
   };
 
   return (
@@ -54,7 +64,7 @@ const Home = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="home-first-container">
-          <p className="greeting">{`Hello, ${userName}`}</p>
+          <p className="greeting">{`Hello ${userName} !`}</p>
           {Array.isArray(userImages) && userImages.length === 0 ? (
             <p className="no-images-message">
               You have not posted any images yet.
@@ -96,13 +106,6 @@ const Home = () => {
 
         <div className="home-second-container">
           <p>
-            Memoir is a photo sharing platform where users can post pictures.{" "}
-            <br /> Unlike other social media platforms that can be distracting,
-            Memoir offers a distraction-free environment. <br /> <br /> The
-            primary purpose of this app is to allow users to view images shared
-            by others, serving as a timestamp of their experiences. You can post
-            any photo here, whether it’s a picture of your beloved pet cat, a
-            stunning sunset, or a beautiful canvas you’ve created. <br /> <br />
             To look at the photos posted by other users, click on the button
             below.
           </p>
@@ -110,10 +113,38 @@ const Home = () => {
             className="gallery-button"
             onClick={() => navigate("/gallery")}
           >
-            Open Gallery
+            Memory Lane
           </button>
+
+          <a className="learn-more-button" onClick={toggleModal}>
+            Learn more
+          </a>
         </div>
       </motion.div>
+
+      {showModal && (
+        <div className="about-modal-overlay" onClick={toggleModal}>
+          <div
+            className="about-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <span className="about-modal-close-button" onClick={toggleModal}>
+              &times;
+            </span>
+            <p>
+              <span className="para-style">{`Memoir `}</span> is a photo sharing
+              platform where users can post pictures. <br /> Unlike other social
+              media platforms that can be distracting, Memoir offers a
+              distraction-free environment. <br /> <br /> The primary purpose of
+              this app is to allow users to view images shared by others,
+              serving as a timestamp of their experiences. You can post any
+              photo here, whether it’s a picture of your beloved pet cat, a
+              stunning sunset, or a beautiful canvas you’ve created. <br />{" "}
+              <br />
+            </p>
+          </div>
+        </div>
+      )}
     </>
   );
 };

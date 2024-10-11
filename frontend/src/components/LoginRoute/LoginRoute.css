@@ -113,6 +113,10 @@
   font-weight: bold;
 }
 
+.loader-container {
+  margin-top: 50%;
+}
+
 @media (min-width: 768px) {
   .login-form-container {
     max-width: 400px;

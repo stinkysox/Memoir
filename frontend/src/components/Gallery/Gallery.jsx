@@ -8,7 +8,7 @@ const Gallery = () => {
   const [imagesArray, setImagesArray] = useState([]);
 
   const getAllPosts = async () => {
-    const url = "http://localhost:4000/all/images";
+    const url = "https://memoirapi.onrender.com/all/images";
     try {
       const response = await axios.get(url);
       const data = response.data;

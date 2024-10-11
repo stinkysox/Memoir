@@ -25,7 +25,7 @@ const AddImages = () => {
     try {
       setApiStatus("Loading");
 
-      const url = "http://localhost:4000/add/image";
+      const url = "https://memoirapi.onrender.com/add/image";
 
       const response = await axios.put(url, {
         userId,
@@ -137,7 +137,7 @@ const AddImages = () => {
         <p className="note">
           Note: After uploading your image on the PostImages website, please
           copy the direct link that ends with .png or .jpg (second link). Then,
-          paste this link into the Image URL section.
+          paste that link into the Image URL section.
         </p>
       </motion.div>
     </>

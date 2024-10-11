@@ -124,6 +124,7 @@ p {
   padding: 10px;
   font-weight: bold;
   border-radius: 10px;
+  border: 1px solid white;
 }
 
 @media (max-width: 600px) {

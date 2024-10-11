@@ -11,6 +11,49 @@
   padding: 20px;
 }
 
+.about-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-modal-content {
+  background-color: black;
+  padding: 20px;
+  color: white;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  position: relative;
+}
+
+.learn-more-button {
+  background-color: wheat;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #243642;
+  margin-top: 10px;
+  cursor: pointer;
+  border: none;
+  margin-left: 20px;
+}
+
+.about-modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
 .add-div {
   margin-top: 10px;
   text-align: center;
@@ -102,7 +145,7 @@
   padding: 12px 20px;
   border-radius: 10px;
   font-weight: bold;
-  margin-top: 20px;
+  margin-top: 10px;
   cursor: pointer;
   border: none;
 }
@@ -139,6 +182,13 @@
   text-align: left;
   margin-top: 0px;
   padding: 10px;
+}
+
+.home-second-container p {
+  border-radius: 10px;
+  color: white;
+  margin-top: 40px;
+  margin-bottom: 0px;
 }
 
 .image-card p::-webkit-scrollbar {
@@ -182,6 +232,14 @@
 
 .image-card button:hover {
   background-color: rgb(255, 138, 117);
+}
+
+.para-style {
+  font-family: "Whisper", cursive;
+  font-weight: 500;
+  color: wheat;
+  font-size: 22px;
+  margin-right: 5px;
 }
 
 .home-second-container p {

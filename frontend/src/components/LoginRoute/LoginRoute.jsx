@@ -5,7 +5,6 @@ import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import { AuthContext } from "../../AuthContext/AuthContext";
-import Navbar from "../Navbar/Navbar";
 
 const LoginRoute = () => {
   const { auth, login } = useContext(AuthContext);
@@ -37,8 +36,8 @@ const LoginRoute = () => {
     setApiStatus("Loading");
     setErrorMessage("");
     const url = isLoginClicked
-      ? "http://localhost:4000/login"
-      : "http://localhost:4000/createuser";
+      ? "https://memoirapi.onrender.com/login"
+      : "https://memoirapi.onrender.com/createuser";
 
     try {
       const response = await axios.post(url, formData);
