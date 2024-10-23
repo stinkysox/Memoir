@@ -5,6 +5,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Home from "./components/Home/Home";
 import AddImages from "./components/AddImagesRoute/AddImages";
 import Gallery from "./components/Gallery/Gallery";
+import ForgotPassword from "./ForgotPassword/ForgotPassword";
 
 function App() {
   return (
@@ -31,6 +32,15 @@ function App() {
         element={
           <ProtectedRoute>
             <Gallery />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/reset-password"
+        element={
+          <ProtectedRoute>
+            <ForgotPassword />
           </ProtectedRoute>
         }
       />

@@ -2,6 +2,7 @@ import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import validator from "validator";
+import sendPinEmail from "../utils/sendPinEmail.js";
 
 const createToken = (id) => {
   if (!process.env.JWT_SECRET) {
@@ -85,13 +86,15 @@ export const verifyUser = async (req, res) => {
         .json({ success: false, message: "Invalid email format" });
     }
 
-    const user = await User.findOne({ email });
+    // Fetch only password and _id initially
+    const user = await User.findOne({ email }).select("password _id");
     if (!user) {
       return res
         .status(400)
         .json({ success: false, message: "Invalid email or password" });
     }
 
+    // Compare the password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res
@@ -99,13 +102,16 @@ export const verifyUser = async (req, res) => {
         .json({ success: false, message: "Invalid email or password" });
     }
 
+    // Now that the user is verified, retrieve the remaining data
+    const userData = await User.findById(user._id).select("name images");
+
     const token = createToken(user._id);
     return res.status(200).json({
       success: true,
       token,
-      images: user.images,
-      name: user.name,
-      userId: user._id,
+      images: userData.images,
+      name: userData.name,
+      userId: userData._id,
     });
   } catch (error) {
     console.error("Error in verifyUser:", error.message);
@@ -225,5 +231,31 @@ export const fetchAllImages = async (req, res) => {
       success: false,
       message: "Server error while fetching images",
     });
+  }
+};
+
+export const requestLoginPin = async (req, res) => {
+  const { email } = req.body;
+
+  console.log(email);
+};
+
+export const verifyLoginPin = async (req, res) => {
+  const { email, pin } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user || user.loginPin !== pin) {
+      return res.status(400).json({ message: "Invalid PIN" });
+    }
+
+    if (Date.now() > user.pinExpires) {
+      return res.status(400).json({ message: "PIN has expired" });
+    }
+
+    res.status(200).json({ message: "Login successful!" });
+  } catch (error) {
+    res.status(500).json({ message: "Error verifying PIN", error });
   }
 };

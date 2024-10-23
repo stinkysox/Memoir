@@ -8,6 +8,8 @@ import {
   deletePost,
   fetchAllImages,
   getUserDetails,
+  requestLoginPin,
+  verifyLoginPin,
   verifyUser,
 } from "./controllers/userControllers.js";
 import dotenv from "dotenv";
@@ -42,8 +44,9 @@ app.put("/add/image", addImages);
 app.post("/user/data", getUserDetails);
 app.delete("/delete/image/:userId/:imageId", deletePost);
 app.get("/all/images", fetchAllImages);
+app.post("/request-pin", requestLoginPin);
+app.post("/verify-pin", verifyLoginPin);
 
-// Welcome route
 app.get("/", (req, res) => {
   console.log("Welcome Browser");
   res.send("Welcome Browser");
