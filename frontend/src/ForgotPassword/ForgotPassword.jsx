@@ -15,12 +15,16 @@ const ForgotPassword = () => {
     setMessage("");
 
     try {
-      const response = await axios.post("http://localhost:4000/request-pin", {
-        email,
-      });
+      const response = await axios.post(
+        "https://memoirapi.onrender.com/request-pin",
+        {
+          email,
+        }
+      );
+      console.log(response);
 
       setLoading(false);
-      setMessage(response.data.message); // Display success message
+      setMessage(response.data.message);
     } catch (err) {
       setLoading(false);
       setError(

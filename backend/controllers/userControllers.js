@@ -236,8 +236,29 @@ export const fetchAllImages = async (req, res) => {
 
 export const requestLoginPin = async (req, res) => {
   const { email } = req.body;
-
   console.log(email);
+  console.log("Hello from email ");
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const pin = Math.floor(10000 + Math.random() * 90000).toString();
+    const pinExpires = Date.now() + 300000;
+
+    user.loginPin = pin;
+    user.pinExpires = new Date(pinExpires);
+    await user.save();
+
+    await sendPinEmail(user.email, pin);
+
+    res.status(200).json({ message: "PIN sent to your email" });
+  } catch (error) {
+    res.status(500).json({ message: "Error sending PIN", error });
+  }
 };
 
 export const verifyLoginPin = async (req, res) => {
